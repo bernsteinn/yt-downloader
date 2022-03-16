@@ -8,6 +8,8 @@ const fetch = require("node-fetch");
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const path = require('path');
+require("dotenv").config()
+
 app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
@@ -20,7 +22,7 @@ function sleep(ms) {
 app.get("/apiDownload", (req,res) =>{
     var data = req.query.name
     async function search(typed){
-        const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${typed}&key=AIzaSyChkB65dYDPQLky2xml9i8PZOSNi3JSaAE`
+        const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${typed}&key=${process.env.API_KEY}`
         const response = await fetch(url)
         const data = await response.json()
         var vid = `https://youtube.com/watch?v=${data.items[0].id.videoId}`
